@@ -11,6 +11,7 @@ namespace TVGLUnitTestsAndBenchmarking
 {
     internal class Program
     {
+
         public static string inputFolder = "Input\\Drawings";
 
         static Random r = new Random();
@@ -23,6 +24,15 @@ namespace TVGLUnitTestsAndBenchmarking
         {
             Global.Presenter2D = new Presenter2D();
             Global.Presenter3D = new Presenter3D();
+
+            var quadric = GeneralQuadric.FromPrimitiveSurface(new Cone(new Vector3(0, 0, 0), new Vector3(0, 0, 1), 0.3, true));
+            Matrix4x4 transform = Matrix4x4.CreateRotationY(Math.PI / 4);
+            var newQuadric = quadric.Copy();
+            newQuadric.Transform(transform, false);
+
+            Presenter.ShowAndHang([quadric.TessellateToNewSolid(-1, 1, -1, 1, -1, 1, 0.02), newQuadric.TessellateToNewSolid(-1, 1, -1, 1, -1, 1, 0.02)]);
+
+            
             var dirInfo = IO.BackoutToFolder(inputFolder);
 
 
